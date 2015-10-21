@@ -3,7 +3,7 @@ from scipy import ndimage
 
 import imageutils as iutils
 
-def prepareImg(filename, height=30, filter_radius=None, crop=False, invert=False, compress=True):
+def prepareImg(filename, height=50, filter_radius=2, crop=False, invert=False, compress=False):
 	"""An old method, used for testing img2stl.to_mesh on random images"""
 	img = None
 	if filename[-5:] == '.fits':
