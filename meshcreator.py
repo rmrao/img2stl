@@ -123,6 +123,8 @@ def to_mesh(npimage, filename, depth=1, double=False, _ascii=False):
 		_ascii - gives option to write ascii stl file. By default it will write a binary stl file, which is
 				harder to debug, but which takes up far less space.
 	"""
+	if not filename[-4:].lower() == '.stl':
+		filename += '.stl'
 	if isinstance(npimage, np.ma.core.MaskedArray):
 		npimage = npimage.data
 	triset = get_triangles(npimage, depth)
@@ -149,7 +151,7 @@ def write_binary(triset, filename):
 	ntri = len(buff)
 	larray = np.zeros((1,),dtype='<u4')
 	larray[0] = ntri
-	f = open(filename+".STL", 'wb')
+	f = open(filename, 'wb')
 	f.write(strhdr)
 	f.write(larray.tostring())
 	buff.tofile(f)
@@ -160,7 +162,7 @@ def write_ascii(triset, filename):
 	Writes an ascii stl file, given a set of triangles and normal vectors, along with a filename.
 	Generally good for debugging, results in a much bigger file.
 	"""
-	f = open(filename+".STL", 'w')
+	f = open(filename, 'w')
 	f.write("solid bozo\n")
 	for t in triset:
 		f.write("facet normal %e %e %e\n" % tuple(t[0]))
